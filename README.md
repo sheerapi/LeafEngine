@@ -58,10 +58,5 @@ Open your terminal (again) and type:
 git clone https://github.com/sheerapi/LeafEngine
 ```
 
-## Contributors
-Every part of Leaf was made by this wonderful people ([Emoji Key](https://allcontributors.org/docs/en/emoji-key)):
-
-This project follows [all-contributors](https://allcontributors.org/) specification. Any kind of contribution is apreciated.
-
 ## License
 This project is under the [MIT license](https://choosealicense.com/licenses/mit/).
