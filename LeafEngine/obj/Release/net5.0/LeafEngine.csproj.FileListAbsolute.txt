@@ -1,0 +1,12 @@
+C:\Users\lucia\source\repos\LeafEngine\LeafEngine\bin\Release\net5.0\LeafEngine.deps.json
+C:\Users\lucia\source\repos\LeafEngine\LeafEngine\bin\Release\net5.0\LeafEngine.dll
+C:\Users\lucia\source\repos\LeafEngine\LeafEngine\bin\Release\net5.0\ref\LeafEngine.dll
+C:\Users\lucia\source\repos\LeafEngine\LeafEngine\bin\Release\net5.0\LeafEngine.pdb
+C:\Users\lucia\source\repos\LeafEngine\LeafEngine\obj\Release\net5.0\LeafEngine.csproj.AssemblyReference.cache
+C:\Users\lucia\source\repos\LeafEngine\LeafEngine\obj\Release\net5.0\LeafEngine.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\lucia\source\repos\LeafEngine\LeafEngine\obj\Release\net5.0\LeafEngine.AssemblyInfoInputs.cache
+C:\Users\lucia\source\repos\LeafEngine\LeafEngine\obj\Release\net5.0\LeafEngine.AssemblyInfo.cs
+C:\Users\lucia\source\repos\LeafEngine\LeafEngine\obj\Release\net5.0\LeafEngine.csproj.CoreCompileInputs.cache
+C:\Users\lucia\source\repos\LeafEngine\LeafEngine\obj\Release\net5.0\LeafEngine.dll
+C:\Users\lucia\source\repos\LeafEngine\LeafEngine\obj\Release\net5.0\ref\LeafEngine.dll
+C:\Users\lucia\source\repos\LeafEngine\LeafEngine\obj\Release\net5.0\LeafEngine.pdb
