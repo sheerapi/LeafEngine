@@ -23,7 +23,7 @@ There's a "huge" list of things left yet, such as:
 - Stop the camera from flicking randomly
 - Make the audio system more fluid
 - Physics system (Box2D for C#)
-- Resource loader and saver (Encrypting and Decrypting files)
+- Resource loader and saver (Encrypting and Decrypting files) / **Going on**
 
 ## FAQ
 ### When i try to play an .mp3 file it doesn't play
