@@ -24,8 +24,6 @@ namespace Leaf
             component.gameObject = this;
             component.transform = transform;
             name = objectName;
-
-            component.Start();
         }
 
         /// <summary>

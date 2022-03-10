@@ -100,6 +100,17 @@ namespace Leaf
 
             Logger.Log("Scene created", Logger.LogLevel.Trace);
 
+            foreach (GameObject gameObject in scene.objects)
+            {
+                foreach (Script script in gameObject.components)
+                {
+                    if (script.enabled == true)
+                    {
+                        script.Start();
+                    }
+                }
+            }
+
             // Everything after this line gets ignored
             MainLoop();
         }
@@ -172,7 +183,10 @@ namespace Leaf
                     {
                         foreach (Script script in gameObject.components)
                         {
-                            script.GetType().GetMethod(name).Invoke(script, parameters);
+                            if (script.enabled == true)
+                            {
+                                script.GetType().GetMethod(name).Invoke(script, parameters);
+                            }
                         }
                     }
                 }
@@ -219,7 +233,10 @@ namespace Leaf
                     {
                         foreach (Script script in gameObject.components)
                         {
-                            script.Update();
+                            if (script.enabled == true)
+                            {
+                                script.Update();
+                            }
                             await Task.Delay(15);
                         }
                     }

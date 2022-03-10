@@ -15,12 +15,14 @@ namespace Leaf
 
         public Transform transform { get; internal set; }
 
+        public bool enabled { get; set; } = true;
+
         /// <summary>
         /// Called when added to a <see cref="GameObject"/>
         /// </summary>
         public virtual void Start()
         {
-            Logger.Log(gameObject.name, Logger.LogLevel.Info);
+            
         }
 
         /// <summary>

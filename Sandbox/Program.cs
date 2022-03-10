@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Leaf;
 
 namespace Sandbox
@@ -12,8 +13,7 @@ namespace Sandbox
                 fillColor = SFML.Graphics.Color.Magenta
             };
 
-            GameObject @object = new GameObject(new SpriteRenderer("84248.png"), "p");
-            @object.AddComponent(new ParallaxEffect());
+            GameObject @object = new GameObject(new Text(File.ReadAllBytes("Comfortaa.ttf")), "p");
 
             Scene scene = new(new GameObject[] { @object });
             Application app = new Application(800, 600, "Sandbox", scene, () => { }, Update);
