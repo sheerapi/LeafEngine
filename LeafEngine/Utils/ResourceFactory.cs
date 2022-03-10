@@ -21,6 +21,8 @@ namespace Leaf
         /// <param name="assetToSave">The asset to save</param>
         public static void SaveAsset(Asset assetToSave)
         {
+            if (File.Exists("assets.res")) Assets = JsonConvert.DeserializeObject<Asset[]>(File.ReadAllText("assets.res"));
+
             foreach (Asset asset in Assets)
             {
                 if (asset.name == assetToSave.name)
@@ -41,7 +43,7 @@ namespace Leaf
         /// Loads an asset from the asset.res file
         /// </summary>
         /// <param name="name">The name of the asset (Case sensitive)</param>
-        /// <returns><see cref="byte"/>[]</returns>
+        /// <returns><see cref="object"/></returns>
         public static byte[] GetAsset(string name)
         {
             if (!File.Exists("assets.res"))
