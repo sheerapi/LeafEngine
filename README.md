@@ -18,7 +18,7 @@ Leaf offers:
 - PlayerPrefs System (so you can save and load player settings in runtime!)
 
 ## To-do
-There's a huge "list" of things left yet, such as:
+There's a "huge" list of things left yet, such as:
 - Making the renderer so it can render more than 1 object at the same time
 - Stop the camera from flicking randomly
 - Make the audio system more fluid
@@ -31,6 +31,8 @@ This is a extract from the [SFML](https://www.sfml-dev.org) docs.
 > SFML supports the audio file formats WAV, OGG/Vorbis and FLAC. Due to licensing issues MP3 is **not supported**.
 ### When i try to render two or more sprites, it spams "Failed to activate the OpenGL context"
 Due to limitations (Knowledge limitations), i couldn't get Leaf to render two or more sprites/shapes, but i'm working on it, it's first priority on the To-Do list.
+### Will this have an editor?
+Yes, it's planned, but first, every bug needs to be solved, but dw, im working on it :)
 
 ## Building
 Building Leaf is as simple as:
@@ -57,11 +59,6 @@ Open your terminal (again) and type:
 ```
 git clone https://github.com/sheerapi/LeafEngine
 ```
-
-## Contributors
-Every part of Leaf was made by this wonderful people ([Emoji Key](https://allcontributors.org/docs/en/emoji-key)):
-
-This project follows [all-contributors](https://allcontributors.org/) specification. Any kind of contribution is apreciated.
 
 ## License
 This project is under the [MIT license](https://choosealicense.com/licenses/mit/).
