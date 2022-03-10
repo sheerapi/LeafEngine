@@ -43,7 +43,7 @@ namespace Leaf
         /// Loads an asset from the asset.res file
         /// </summary>
         /// <param name="name">The name of the asset (Case sensitive)</param>
-        /// <returns><see cref="object"/></returns>
+        /// <returns><see cref="byte"/>[]</returns>
         public static byte[] GetAsset(string name)
         {
             if (!File.Exists("assets.res"))
