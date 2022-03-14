@@ -16,21 +16,20 @@ Leaf offers:
 - Logger System (even with pretty colors)
 - Time System
 - PlayerPrefs System (so you can save and load player settings in runtime!)
+- Basic UI (Only text at the moment, working on more things dw)
 
 ## To-do
 There's a "huge" list of things left yet, such as:
-- Making the renderer so it can render more than 1 object at the same time
-- Stop the camera from flicking randomly
-- Make the audio system more fluid
-- Physics system (Box2D for C#)
-- Resource loader and saver (Encrypting and Decrypting files) / **"Finished" (Needs encrypting)**
+- Making the renderer so it can render more than 1 object at the same time / **Fixed**
+- Stop the camera from flicking randomly / **Fixed, i think**
+- Make the audio system more fluid / **Working on it**
+- Physics system (Box2D for C#) / **Delayed**
+- Resource loader and saver (Encrypting and Decrypting files) / **Finished (Removed encrypting)**
 
 ## FAQ
 ### When i try to play an .mp3 file it doesn't play
 This is a extract from the [SFML](https://www.sfml-dev.org) docs.
 > SFML supports the audio file formats WAV, OGG/Vorbis and FLAC. Due to licensing issues MP3 is **not supported**.
-### When i try to render two or more sprites, it spams "Failed to activate the OpenGL context"
-Due to limitations (Knowledge limitations), i couldn't get Leaf to render two or more sprites/shapes, but i'm working on it, it's first priority on the To-Do list.
 ### Will this have an editor?
 Yes, it's planned, but first, every bug needs to be solved, but dw, im working on it :)
 
