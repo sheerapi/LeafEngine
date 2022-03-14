@@ -13,13 +13,14 @@ namespace Leaf
     public class GameObject
     {
         public Transform transform { get; set; } = new Transform();
+
         protected internal Script[] components = Array.Empty<Script>();
         public string name { get; }
 
         public GameObject(Script component, string objectName)
         {
             Array.Resize(ref components, components.Length + 1);
-            components[components.Length - 1] = component;
+            components[^1] = component;
 
             component.gameObject = this;
             component.transform = transform;
@@ -47,15 +48,19 @@ namespace Leaf
             return null;
         }
 
-        public T GetScript<T>(Type script)
+        public T GetScript<T>(string script)
             where T : Script
         {
 
-            if (components == null || components.Length <= 0) return null;
+            if (components == null || components.Length <= 0)
+            {
+                Logger.Log("Tried to obtain a Script that doesn't exists in the current object", Logger.LogLevel.Error);
+                return null;
+            }
 
             foreach (Script component in components)
             {
-                if (component.GetType() == script.GetType())
+                if (component.GetType().Name == script)
                 {
                     return (T)component;
                 }
@@ -67,7 +72,7 @@ namespace Leaf
         public void AddComponent(Script component)
         {
             Array.Resize(ref components, components.Length + 1);
-            components[components.Length - 1] = component;
+            components[^1] = component;
 
             component.transform = transform;
             component.gameObject = this;

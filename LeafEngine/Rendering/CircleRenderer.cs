@@ -22,6 +22,7 @@ namespace Leaf
         public override void Start()
         {
             shape = new CircleShape(radius);
+            Application.Default.SuscribeDrawable(shape);
         }
 
         public override void Update()
@@ -33,10 +34,6 @@ namespace Leaf
             shape.Rotation = transform.rotation;
             shape.Position = new SFML.System.Vector2f(transform.position.x, transform.position.y);
             shape.Scale = new SFML.System.Vector2f(transform.scale.x, transform.scale.y);
-
-            Application.Default.Window.Draw(shape, new RenderStates(BlendMode.Alpha));
-
-            // c
         }
     }
 }

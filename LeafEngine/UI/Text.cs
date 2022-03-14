@@ -46,6 +46,8 @@ namespace Leaf
         public override void Start()
         {
             sfmlText = new SFML.Graphics.Text(text, font, (uint)fontSize);
+
+            Application.Default.SuscribeDrawable(sfmlText);
         }
 
         public override void Update()
@@ -81,8 +83,6 @@ namespace Leaf
             sfmlText.OutlineThickness = outlineRadius;
             sfmlText.LetterSpacing = letterSpacing;
             sfmlText.LineSpacing = lineSpacing;
-
-            Application.Default.Window.Draw(sfmlText, new RenderStates(BlendMode.Alpha));
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 
 namespace Leaf
@@ -21,7 +22,18 @@ namespace Leaf
         /// <param name="assetToSave">The asset to save</param>
         public static void SaveAsset(Asset assetToSave)
         {
-            if (File.Exists("assets.res")) Assets = JsonConvert.DeserializeObject<Asset[]>(File.ReadAllText("assets.res"));
+            if (File.Exists("assets.res"))
+            {
+                FileStream fsm = new FileStream("assets.res", FileMode.Open);
+
+                BinaryFormatter bn = new BinaryFormatter();
+
+                string jsonStr = (string)bn.Deserialize(fsm);
+
+                fsm.Close();
+
+                Assets = JsonConvert.DeserializeObject<Asset[]>(jsonStr);
+            }
 
             foreach (Asset asset in Assets)
             {
@@ -36,7 +48,14 @@ namespace Leaf
             Assets[^1] = assetToSave;
 
             string json = JsonConvert.SerializeObject(Assets, Formatting.Indented);
-            File.WriteAllText("assets.res", json);
+
+            FileStream fs = new FileStream("assets.res", FileMode.OpenOrCreate);
+
+            BinaryFormatter binaryFormatter = new BinaryFormatter();
+
+            binaryFormatter.Serialize(fs, json);
+
+            fs.Close();
         }
 
         /// <summary>
@@ -52,7 +71,15 @@ namespace Leaf
                 return null;
             }
 
-            Asset[] assets = JsonConvert.DeserializeObject<Asset[]>(File.ReadAllText("assets.res"));
+            FileStream fs = new FileStream("assets.res", FileMode.Open);
+
+            BinaryFormatter binaryFormatter = new BinaryFormatter();
+
+            string json = (string)binaryFormatter.Deserialize(fs);
+
+            fs.Close();
+
+            Asset[] assets = JsonConvert.DeserializeObject<Asset[]>(json);
             Asset requiredAsset = null;
 
             foreach (Asset asset in assets)

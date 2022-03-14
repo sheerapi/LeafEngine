@@ -24,6 +24,7 @@ namespace Leaf
         {
             shape = new ConvexShape((uint)polygonCount);
             shape.SetPointCount((uint)polygonCount);
+            Application.Default.SuscribeDrawable(shape);
         }
 
         public override void Update()
@@ -39,8 +40,6 @@ namespace Leaf
             shape.Rotation = transform.rotation;
             shape.Position = new Vector2f(transform.position.x, transform.position.y);
             shape.Scale = new Vector2f(transform.scale.x, transform.scale.y);
-
-            Application.Default.Window.Draw(shape, new RenderStates(BlendMode.Alpha));
 
             // transform.position = new Vector3(transform.position.x + Input.GetAxis("Horizontal", true), transform.position.y + Input.GetAxis("vertical", true), 0f);
         }

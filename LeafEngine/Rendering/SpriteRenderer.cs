@@ -16,11 +16,11 @@ namespace Leaf
 
         public bool smooth { get; set; } = true;
 
-        public bool fitToScreen { get; set; } = true;
+        public bool fitToScreen { get; set; } = false;
 
-        public SpriteRenderer(string fileName)
+        public SpriteRenderer(byte[] Sprite)
         {
-            Texture texture = new Texture(File.ReadAllBytes(fileName));
+            Texture texture = new Texture(Sprite);
             sprite = new Sprite(texture);
 
             if (sprite == null || texture == null)
@@ -34,6 +34,8 @@ namespace Leaf
             sprite.TextureRect = new IntRect(0, 0, (int)sprite.Texture.Size.X, (int)sprite.Texture.Size.Y);
 
             sprite.Texture.Update(sprite.Texture.CopyToImage().Pixels);
+
+            Application.Default.SuscribeDrawable(sprite);
         }
 
         public override void Update()
@@ -51,8 +53,6 @@ namespace Leaf
             sprite.Position = new SFML.System.Vector2f(transform.position.x, transform.position.y);
             sprite.TextureRect = new IntRect(new SFML.System.Vector2i(0, 0), new SFML.System.Vector2i((int)sprite.Texture.Size.X, (int)sprite.Texture.Size.Y));
             sprite.Texture.Smooth = smooth;
-
-            Application.Default.Window.Draw(sprite, new RenderStates(BlendMode.Alpha));
 
             //transform.position = new Vector2(transform.position.x + Input.GetAxis("Horizontal", true), transform.position.y + Input.GetAxis("vertical", true));
         }

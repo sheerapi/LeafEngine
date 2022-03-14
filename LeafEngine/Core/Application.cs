@@ -22,6 +22,18 @@ namespace Leaf
         /// </summary>
         public int Height { get; private set; }
 
+        protected internal List<Drawable> Drawables { get; set; } = new List<Drawable>();
+
+        /// <summary>
+        /// The maximum of Frames Per Second the window can go
+        /// </summary>
+        public int FrameRateLimit { get; set; } = 60;
+
+        /// <summary>
+        /// Whether the window should have VSync or not
+        /// </summary>
+        public bool VSync { get; set; } = true;
+
         protected internal Scene scene { get; set; }
 
         /// <summary>
@@ -196,6 +208,16 @@ namespace Leaf
 
         #region Main Loop
 
+        private async void Render()
+        {
+            foreach (Drawable drawable in Drawables)
+            {
+                Window.Draw(drawable, new RenderStates(BlendMode.Alpha));
+            }
+
+            await Task.Delay(15);
+        }
+
         async Task<Task> MainLoop()
         {
             Start();
@@ -206,14 +228,25 @@ namespace Leaf
 
                 Window.Clear(Camera.main.BackgroundColor);
 
+                // Window.PushGLStates();
+
+                Window.SetFramerateLimit((uint)FrameRateLimit);
+
+                Render();
+
                 UpdateScripts();
 
                 Tick();
+
+                // Window.PopGLStates();
+                // Window.ResetGLStates();
 
                 Width = (int)Window.Size.X;
                 Height = (int)Window.Size.Y;
 
                 TimeEvents();
+
+                Window.SetVerticalSyncEnabled(VSync);
                 
                 Window.Display();
             }
@@ -254,9 +287,9 @@ namespace Leaf
 
         #region Window Methods
 
-        public void UpdateCursor(Cursor cursor)
+        public void UpdateCursor(byte[] cursor, Vector2 cursorSize, Vector2 cursorHotspot)
         {
-            Window.SetMouseCursor(cursor);
+            Window.SetMouseCursor(new Cursor(cursor, new SFML.System.Vector2u((uint)cursorSize.x, (uint)cursorSize.y), new SFML.System.Vector2u((uint)cursorHotspot.x, (uint)cursorHotspot.y)));
         }
 
         public void SetCursorAsGrabbed(bool grabbed)
@@ -267,6 +300,11 @@ namespace Leaf
         public void UpdateTitle(string title)
         {
             Window.SetTitle(title);
+        }
+
+        public void SuscribeDrawable(Drawable drawable)
+        {
+            Drawables.Add(drawable);
         }
 
         #endregion
