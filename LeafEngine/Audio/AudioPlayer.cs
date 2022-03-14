@@ -28,9 +28,9 @@ namespace Leaf
 
         public string soundStatus { get; set; }
 
-        public AudioPlayer(string fileName)
+        public AudioPlayer(byte[] audio)
         {
-            buffer = new SoundBuffer(File.ReadAllBytes(fileName));
+            buffer = new SoundBuffer(audio);
             sound = new Sound(buffer);
         }
 

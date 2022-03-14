@@ -19,12 +19,7 @@ Leaf offers:
 - Basic UI (Only text at the moment, working on more things dw)
 
 ## To-do
-There's a "huge" list of things left yet, such as:
-- Making the renderer so it can render more than 1 object at the same time / **Fixed**
-- Stop the camera from flicking randomly / **Fixed, i think**
-- Make the audio system more fluid / **Working on it**
 - Physics system (Box2D for C#) / **Delayed**
-- Resource loader and saver (Encrypting and Decrypting files) / **Finished (Removed encrypting)**
 
 ## FAQ
 ### When i try to play an .mp3 file it doesn't play

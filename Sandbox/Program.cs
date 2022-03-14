@@ -9,7 +9,7 @@ namespace Sandbox
         static void Main(string[] args)
         {
             ResourceFactory.SaveAsset(new Asset("comfortaFont", File.ReadAllBytes("Comfortaa.ttf")));
-            ResourceFactory.SaveAsset(new Asset("test", File.ReadAllBytes("biolinde.png")));
+            ResourceFactory.SaveAsset(new Asset("testAudio", File.ReadAllBytes("saoko.ogg")));
 
             PolygonShape renderer = new PolygonShape()
             {
@@ -17,7 +17,10 @@ namespace Sandbox
             };
 
             GameObject @object = new GameObject(new Text(ResourceFactory.GetAsset("comfortaFont")), "p");
-            GameObject sprite = new GameObject(new SpriteRenderer(ResourceFactory.GetAsset("test")), "s");
+            GameObject sprite = new GameObject(new AudioPlayer(ResourceFactory.GetAsset("testAudio"))
+            {
+                pitch = 1.25f
+            }, "s");
 
             Scene scene = new(new GameObject[] { sprite, @object });
             Application app = new Application(800, 600, "Sandbox", scene, () => { }, Update);
