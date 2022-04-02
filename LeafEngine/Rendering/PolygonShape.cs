@@ -20,11 +20,13 @@ namespace Leaf
 
         protected internal ConvexShape shape { get; set; }
 
+        private Shader Shader { get; set; }
+
         public override void Start()
         {
             shape = new ConvexShape((uint)polygonCount);
             shape.SetPointCount((uint)polygonCount);
-            Application.Default.SuscribeDrawable(shape);
+            Application.Default.SuscribeDrawable(new LDrawable(shape, Shader));
         }
 
         public override void Update()
@@ -33,9 +35,9 @@ namespace Leaf
             shape.SetPoint(1, new Vector2f(90f, 90f));
             shape.SetPoint(2, new Vector2f(-90f, 90f));
 
-            shape.FillColor = fillColor;
+            shape.FillColor = new SFML.Graphics.Color((byte)fillColor.r, (byte)fillColor.g, (byte)fillColor.b, (byte)fillColor.a);
             shape.OutlineThickness = outlineRadius;
-            shape.OutlineColor = outlineColor;
+            shape.OutlineColor = new SFML.Graphics.Color((byte)outlineColor.r, (byte)outlineColor.g, (byte)outlineColor.b, (byte)outlineColor.a);
             shape.SetPointCount((uint)polygonCount);
             shape.Rotation = transform.rotation;
             shape.Position = new Vector2f(transform.position.x, transform.position.y);
@@ -47,6 +49,11 @@ namespace Leaf
         public void SetPoint(int index, Vector2 point)
         {
             shape.SetPoint((uint)index, new Vector2f(point.x, point.y));
+        }
+
+        public void SetShader(Shader shader)
+        {
+            Shader = shader;
         }
     }
 }

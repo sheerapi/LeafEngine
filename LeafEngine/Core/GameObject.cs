@@ -17,14 +17,17 @@ namespace Leaf
         protected internal Script[] components = Array.Empty<Script>();
         public string name { get; }
 
-        public GameObject(Script component, string objectName)
+        public GameObject(Script[] scripts, string objectName)
         {
-            Array.Resize(ref components, components.Length + 1);
-            components[^1] = component;
+            components = scripts;
 
-            component.gameObject = this;
-            component.transform = transform;
+            foreach (Script component in components)
+            {
+                component.gameObject = this;
+                component.transform = transform;
+            }
             name = objectName;
+            transform.gameObject = this;
         }
 
         /// <summary>
@@ -78,6 +81,11 @@ namespace Leaf
             component.gameObject = this;
             component.Start();
         }
+
+        public override string ToString()
+        {
+            return name + " [" + transform.ToString() + "]" + " [" + components.Length + " components]";
+        }
     }
 
     /// <summary>
@@ -91,134 +99,20 @@ namespace Leaf
 
         public Vector2 scale { get; set; }
 
+        public Transform parent { get; set; }
+
+        public GameObject gameObject { get; set; }
+
         public Transform()
         {
             position = Vector3.Zero();
             rotation = 0f;
             scale = new Vector2(1f, 1f);
         }
-    }
-
-    /// <summary>
-    /// Representation of 2D vectors and points
-    /// </summary>
-    public struct Vector2
-    {
-        public float x { get; set; }
-        public float y { get; set; }
-
-        /// <summary>
-        /// Creates a new vector with the given properties
-        /// </summary>
-        /// <param name="X"></param>
-        /// <param name="Y"></param>
-        public Vector2(float X, float Y)
-        {
-            x = X;
-            y = Y;
-        }
-
-        public static Vector2 Zero() { return new Vector2(0f, 0f); }
 
         public override string ToString()
         {
-            return "[Vector2] X(" + x.ToString("0.00") + ") Y(" + y.ToString("0.00") + ")";
-        }
-
-        public static Vector2 operator +(Vector2 a, Vector2 b)
-        {
-            return new Vector2(a.x + b.x, a.y + b.y);
-        }
-
-        public static Vector2 operator -(Vector2 a, Vector2 b)
-        {
-            return new Vector2(a.x - b.x, a.y - b.y);
-        }
-
-        public static Vector2 operator *(Vector2 a, Vector2 b)
-        {
-            return new Vector2(a.x * b.x, a.y * b.y);
-        }
-
-        public static Vector2 operator *(Vector2 a, float b)
-        {
-            return new Vector2(a.x * b, a.y * b);
-        }
-
-        public static Vector2 operator /(Vector2 a, Vector2 b)
-        {
-            return new Vector2(a.x / b.x, a.y / b.y);
-        }
-
-        public static Vector2 operator /(Vector2 a, float b)
-        {
-            return new Vector2(a.x / b, a.y / b);
-        }
-    }
-
-    /// <summary>
-    /// Representation of 3D vectors and points
-    /// </summary>
-    public struct Vector3
-    {
-        public float x { get; set; }
-        public float y { get; set; }
-
-        public float z { get; set; }
-
-        /// <summary>
-        /// Creates a new vector with the given properties
-        /// </summary>
-        /// <param name="X"></param>
-        /// <param name="Y"></param>
-        /// <param name="Z"></param>
-        public Vector3(float X, float Y, float Z)
-        {
-            x = X;
-            y = Y;
-            z = Z;
-        }
-
-        public static Vector3 Zero() { return new Vector3(0f, 0f, 0f); }
-
-        public override string ToString()
-        {
-            return "[Vector2] X(" + x.ToString("0.00") + ") Y(" + y.ToString("0.00") + ")" + "Z(" + z.ToString("0.00") + ")";
-        }
-
-        public static Vector3 operator +(Vector3 a, Vector3 b)
-        {
-            return new Vector3(a.x + b.x, a.y + b.y, a.z + b.z);
-        }
-
-        public static Vector3 operator -(Vector3 a, Vector3 b)
-        {
-            return new Vector3(a.x - b.x, a.y - b.y, a.z - b.z);
-        }
-
-        public static Vector3 operator *(Vector3 a, Vector3 b)
-        {
-            return new Vector3(a.x * b.x, a.y * b.y, a.z * b.z);
-        }
-
-        public static Vector3 operator *(Vector3 a, float b)
-        {
-            return new Vector3(a.x * b, a.y * b, a.z * b);
-        }
-
-        public static Vector3 operator /(Vector3 a, Vector3 b)
-        {
-            return new Vector3(a.x / b.x, a.y / b.y, a.z / b.z);
-        }
-
-        public static Vector3 operator /(Vector3 a, float b)
-        {
-            return new Vector3(a.x / b, a.y / b, a.z / b);
-        }
-
-        public static Vector3 Lerp(Vector3 a, Vector3 b, float t)
-        {
-            return new Vector3(MathL.Lerp(a.x, b.x, t), MathL.Lerp(a.y, b.y, t), MathL.Lerp(a.z, b.z, t));
+            return position.ToString() + " " + rotation.ToString("0.00") + "° " + scale.ToString();
         }
     }
 }

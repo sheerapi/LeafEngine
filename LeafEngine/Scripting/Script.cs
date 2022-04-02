@@ -33,6 +33,8 @@ namespace Leaf
 
         }
 
+        public virtual void MouseLeft() { }
+
         public virtual void MouseMove(Vector2 newPos) { }
 
         public virtual void OnWindowClose() { }

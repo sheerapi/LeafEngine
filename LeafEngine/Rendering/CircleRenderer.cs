@@ -11,29 +11,36 @@ namespace Leaf
     {
         public float radius { get; set; } = 10f;
 
-        public Color fillColor { get; set; } = Color.Cyan;
+        public Color fillColor { get; set; }
 
         public float outlineRadius { get; set; } = 0.1f;
 
-        public Color outlineFillColor { get; set; } = Color.Green;
+        public Color outlineFillColor { get; set; }
 
         protected internal CircleShape shape { get; set; }
+
+        private Shader Shader { get; set; }
 
         public override void Start()
         {
             shape = new CircleShape(radius);
-            Application.Default.SuscribeDrawable(shape);
+            Application.Default.SuscribeDrawable(new LDrawable(shape, Shader));
         }
 
         public override void Update()
         {
-            shape.FillColor = fillColor;
-            shape.OutlineColor = outlineFillColor;
+            shape.FillColor = new SFML.Graphics.Color((byte)fillColor.r, (byte)fillColor.g, (byte)fillColor.b, (byte)fillColor.a); ;
+            shape.OutlineColor = new SFML.Graphics.Color((byte)outlineFillColor.r, (byte)outlineFillColor.g, (byte)outlineFillColor.b, (byte)outlineFillColor.a); ;
             shape.OutlineThickness = outlineRadius;
             shape.Radius = radius;
             shape.Rotation = transform.rotation;
-            shape.Position = new SFML.System.Vector2f(transform.position.x, transform.position.y);
+            shape.Position = new SFML.System.Vector2f(transform.position.x * Project.PixelsPerMeter, transform.position.y * Project.PixelsPerMeter);
             shape.Scale = new SFML.System.Vector2f(transform.scale.x, transform.scale.y);
+        }
+
+        public void SetShader(Shader shader)
+        {
+            Shader = shader;
         }
     }
 }

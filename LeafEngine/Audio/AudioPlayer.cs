@@ -65,7 +65,7 @@ namespace Leaf
                     break;
             }
 
-            sound.Position = new SFML.System.Vector3f(transform.position.x, transform.position.y, transform.position.z);
+            sound.Position = new SFML.System.Vector3f(transform.position.x * Project.PixelsPerMeter, transform.position.y * Project.PixelsPerMeter, transform.position.z * Project.PixelsPerMeter);
 
             pitch += Input.GetAxis("Vertical", true) * Time.deltaTime;
             transform.position = new Vector3(transform.position.x + Input.GetAxis("Vertical", true), transform.position.y + Input.GetAxis("Vertical", true), 0f);

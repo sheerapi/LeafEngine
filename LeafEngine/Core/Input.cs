@@ -13,18 +13,28 @@ namespace Leaf
     public class Input
     {
         protected static internal Keyboard.Key PressedKey { get; set; }
+
         protected static internal bool KeyHold { get; set; }
+
+        protected static internal bool KeyPressed { get; set; }
+
+        protected static internal bool MouseHold { get; set; }
+
+        protected static internal bool MousePressed { get; set; }
+
+        protected static internal Mouse.Button MouseButtonPressed { get; set; }
+
         private static Dictionary<string, float> Axes { get; set; } = new Dictionary<string, float>()
         {
             { "horizontal", 0f },
             { "vertical", 0f }
         };
 
-        public static Vector2 mousePosition { get; internal set; }
+        public static Vector2 mousePosition { get; internal set; } = new Vector2(-5f, -5f);
 
-        public static bool IsKeyHold(Keyboard.Key key)
+        public static bool IsKeyHold(string key)
         {
-            if (KeyHold == true && PressedKey == key)
+            if (KeyHold == true && PressedKey.ToString().ToLower() == key.ToLower())
             {
                 return true;
             }
@@ -32,9 +42,29 @@ namespace Leaf
             return false;
         }
 
-        public static bool IsKeyReleased(Keyboard.Key key)
+        public static bool IsKeyDown(string key)
         {
-            if (KeyHold == false && PressedKey == key)
+            if (KeyPressed == true && PressedKey.ToString().ToLower() == key.ToLower())
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public static bool IsKeyReleased(string key)
+        {
+            if (KeyHold == false && PressedKey.ToString().ToLower() == key.ToLower())
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public static bool IsKeyUp(string key)
+        {
+            if (KeyPressed == false && PressedKey.ToString().ToLower() == key.ToLower())
             {
                 return true;
             }

@@ -1,34 +1,32 @@
 ﻿using System;
 using System.IO;
 using Leaf;
+using Leaf.UI;
 
 namespace Sandbox
 {
     class Program
     {
+        static Scene scene;
+
+        static GameObject @object;
+
         static void Main(string[] args)
         {
-            ResourceFactory.SaveAsset(new Asset("comfortaFont", File.ReadAllBytes("Comfortaa.ttf")));
+            ResourceFactory.SaveAsset(new Asset("button", File.ReadAllBytes("Button.png")));
             ResourceFactory.SaveAsset(new Asset("testAudio", File.ReadAllBytes("saoko.ogg")));
 
-            PolygonShape renderer = new PolygonShape()
-            {
-                fillColor = SFML.Graphics.Color.Magenta
-            };
+            @object = new GameObject(new Script[] { new Button() }, "p");
 
-            GameObject @object = new GameObject(new Text(ResourceFactory.GetAsset("comfortaFont")), "p");
-            GameObject sprite = new GameObject(new AudioPlayer(ResourceFactory.GetAsset("testAudio"))
+            GameObject sprite = new GameObject(new Script[] {new AudioPlayer(ResourceFactory.GetAsset("testAudio"))
             {
                 pitch = 1.25f
-            }, "s");
+            } }, "s");
 
-            Scene scene = new(new GameObject[] { sprite, @object });
-            Application app = new Application(800, 600, "Sandbox", scene, () => { }, Update);
-        }
+            sprite.transform.parent = @object.transform;
 
-        public static void Update()
-        {
-            GameObject.FindByName("p").GetScript<Text>("Text").text = ((int)(1f / Time.deltaTime)).ToString();
+            scene = new(new GameObject[] { sprite, @object });
+            Application app = new Application(800, 600, "Sandbox", scene);
         }
     }
 }

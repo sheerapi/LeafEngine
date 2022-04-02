@@ -22,7 +22,7 @@ namespace Leaf
         /// </summary>
         public int Height { get; private set; }
 
-        protected internal List<Drawable> Drawables { get; set; } = new List<Drawable>();
+        protected internal List<LDrawable> Drawables { get; set; } = new List<LDrawable>();
 
         /// <summary>
         /// The maximum of Frames Per Second the window can go
@@ -99,16 +99,19 @@ namespace Leaf
             Window.JoystickConnected += JoytickConnect;
             Window.LostFocus += Focus;
             Window.GainedFocus += Focus;
+            Window.MouseLeft += MouseLeft;
             Window.JoystickDisconnected += JoystickDisconnect;
             Window.KeyPressed += KeyPressed;
             Window.KeyReleased += KeyReleased;
             Window.MouseMoved += MouseMoved;
+            Window.MouseButtonPressed += MouseButtonPressed;
+            Window.MouseButtonReleased += MouseButtonReleased;
             Tick = update;
             Start = start;
 
             Logger.Log("Window initialized", Logger.LogLevel.Trace);
 
-            scene.Push(new GameObject(new Camera(), "Main Camera"));
+            scene.Push(new GameObject(new Script[] { new Camera() }, "Main Camera"));
 
             Logger.Log("Scene created", Logger.LogLevel.Trace);
 
@@ -126,14 +129,34 @@ namespace Leaf
             // Everything after this line gets ignored
             MainLoop();
         }
-
         #endregion
 
         #region Events
+        private void MouseLeft(object sender, EventArgs e)
+        {
+            CallGlobalEvent("MouseLeft", new object[] { });
+        }
+
+        private void MouseButtonPressed(object sender, MouseButtonEventArgs e)
+        {
+            Input.MouseButtonPressed = e.Button;
+            Input.MouseHold = true;
+            Input.MousePressed = true;
+            Input.MousePressed = false;
+        }
+
+        private void MouseButtonReleased(object sender, MouseButtonEventArgs e)
+        {
+            Input.MouseButtonPressed = e.Button;
+            Input.MouseHold = false;
+            Input.MousePressed = false;
+        }
+
         private void KeyReleased(object sender, KeyEventArgs e)
         {
             Input.KeyHold = false;
             Input.PressedKey = e.Code;
+            Input.KeyPressed = false;
         }
 
         private void MouseMoved(object sender, MouseMoveEventArgs e)
@@ -146,6 +169,8 @@ namespace Leaf
         {
             Input.PressedKey = e.Code;
             Input.KeyHold = true;
+            Input.KeyPressed = true;
+            Input.KeyPressed = false;
         }
 
         private void Focus(object sender, EventArgs e)
@@ -210,9 +235,16 @@ namespace Leaf
 
         private async void Render()
         {
-            foreach (Drawable drawable in Drawables)
+            foreach (LDrawable drawable in Drawables)
             {
-                Window.Draw(drawable, new RenderStates(BlendMode.Alpha));
+                RenderStates renderStates = new RenderStates(drawable.BlendMode);
+                
+                if (drawable.Shader != null)
+                {
+                    renderStates.Shader = drawable.Shader;
+                }
+
+                Window.Draw(drawable.Drawable, renderStates);
             }
 
             await Task.Delay(15);
@@ -226,9 +258,7 @@ namespace Leaf
             {
                 Window.DispatchEvents();
 
-                Window.Clear(Camera.main.BackgroundColor);
-
-                // Window.PushGLStates();
+                Window.Clear(new SFML.Graphics.Color((byte)Camera.main.backgroundColor.r, (byte)Camera.main.backgroundColor.g, (byte)Camera.main.backgroundColor.b, (byte)Camera.main.backgroundColor.a));
 
                 Window.SetFramerateLimit((uint)FrameRateLimit);
 
@@ -237,9 +267,6 @@ namespace Leaf
                 UpdateScripts();
 
                 Tick();
-
-                // Window.PopGLStates();
-                // Window.ResetGLStates();
 
                 Width = (int)Window.Size.X;
                 Height = (int)Window.Size.Y;
@@ -302,7 +329,7 @@ namespace Leaf
             Window.SetTitle(title);
         }
 
-        public void SuscribeDrawable(Drawable drawable)
+        public void SuscribeDrawable(LDrawable drawable)
         {
             Drawables.Add(drawable);
         }

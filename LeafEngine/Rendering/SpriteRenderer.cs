@@ -12,11 +12,13 @@ namespace Leaf
     {
         public Sprite sprite { get; set; }
 
-        public Color color { get; set; } = Color.White;
+        public Color color { get; set; } = new Color(255, 255, 255, 255);
 
         public bool smooth { get; set; } = true;
 
         public bool fitToScreen { get; set; } = false;
+
+        private Shader Shader { get; set; }
 
         public SpriteRenderer(byte[] Sprite)
         {
@@ -35,7 +37,7 @@ namespace Leaf
 
             sprite.Texture.Update(sprite.Texture.CopyToImage().Pixels);
 
-            Application.Default.SuscribeDrawable(sprite);
+            Application.Default.SuscribeDrawable(new LDrawable(sprite, Shader));
         }
 
         public override void Update()
@@ -47,14 +49,19 @@ namespace Leaf
                 transform.scale = new Vector2(vm.Width / texSize.x, vm.Height / texSize.y);
             }
 
-            sprite.Color = color;
+            sprite.Color = new SFML.Graphics.Color((byte)color.r, (byte)color.g, (byte)color.b, (byte)color.a);
             sprite.Scale = new SFML.System.Vector2f(transform.scale.x, transform.scale.y);
             sprite.Rotation = transform.rotation;
-            sprite.Position = new SFML.System.Vector2f(transform.position.x, transform.position.y);
+            sprite.Position = new SFML.System.Vector2f(transform.position.x * Project.PixelsPerMeter, transform.position.y * Project.PixelsPerMeter);
             sprite.TextureRect = new IntRect(new SFML.System.Vector2i(0, 0), new SFML.System.Vector2i((int)sprite.Texture.Size.X, (int)sprite.Texture.Size.Y));
             sprite.Texture.Smooth = smooth;
 
             //transform.position = new Vector2(transform.position.x + Input.GetAxis("Horizontal", true), transform.position.y + Input.GetAxis("vertical", true));
+        }
+
+        public void SetShader(Shader shader)
+        {
+            Shader = shader;
         }
     }
 }

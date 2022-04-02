@@ -15,7 +15,7 @@ namespace Leaf
     {
         public static Camera main { get; internal set; }
 
-        public Color BackgroundColor { get; set; } = Color.Black;
+        public Color backgroundColor { get; set; } = Color.Black;
 
         public float zoomFactor { get; set; } = 1f;
 
@@ -30,11 +30,6 @@ namespace Leaf
         public Camera()
         {
             main = this;
-        }
-
-        public override void Start()
-        {
-            
         }
 
         public override void Update()
@@ -54,14 +49,17 @@ namespace Leaf
 
             Application.Default.Window.SetView(view);
 
-            if (Input.IsKeyHold(SFML.Window.Keyboard.Key.A))
-            {
-                Random r = new Random();
-                System.Drawing.Color col = System.Drawing.Color.FromArgb(r.Next(0, 256), r.Next(0, 256), r.Next(0, 256));
-                BackgroundColor = new Color(col.R, col.G, col.B);
-            }
-
             // zoomFactor += Input.GetAxis("Vertical", true) / 5f;
+        }
+
+        public Vector3 ScreenToWorldPosition(Vector3 screenPos)
+        {
+            return screenPos / Project.PixelsPerMeter;
+        }
+
+        public Vector3 WorldToScreenPosition(Vector3 worldPos)
+        {
+            return worldPos * Project.PixelsPerMeter;
         }
     }
 }
