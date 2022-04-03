@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace Leaf
 {
     /// <summary>
     /// Base class to create and manage scripts, derivate from this class if you want a functional script
     /// </summary>
+    [JsonObject(memberSerialization: MemberSerialization.OptOut)]
     public class Script
     {
         public GameObject gameObject { get; internal set; }

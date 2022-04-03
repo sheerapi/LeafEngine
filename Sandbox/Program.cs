@@ -23,10 +23,18 @@ namespace Sandbox
                 pitch = 1.25f
             } }, "s");
 
-            sprite.transform.parent = @object.transform;
-
             scene = new(new GameObject[] { sprite, @object });
-            Application app = new Application(800, 600, "Sandbox", scene);
+            Application app = new Application(800, 600, "Sandbox", scene, Start, Update);
+        }
+
+        static void Start()
+        {
+            Logger.Log(scene.ToJson(), Logger.LogLevel.Info);
+        }
+
+        static void Update()
+        {
+
         }
     }
 }

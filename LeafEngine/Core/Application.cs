@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SFML.Window;
+using Newtonsoft.Json;
 using SFML.Graphics;
 
 namespace Leaf
 {
     public class Application
     {
+        [JsonProperty]
         protected internal RenderWindow Window { get; private set; }
 
         /// <summary>
@@ -22,6 +24,7 @@ namespace Leaf
         /// </summary>
         public int Height { get; private set; }
 
+        [JsonProperty]
         protected internal List<LDrawable> Drawables { get; set; } = new List<LDrawable>();
 
         /// <summary>
@@ -34,6 +37,7 @@ namespace Leaf
         /// </summary>
         public bool VSync { get; set; } = true;
 
+        [JsonProperty]
         protected internal Scene scene { get; set; }
 
         /// <summary>
@@ -41,17 +45,18 @@ namespace Leaf
         /// </summary>
         public static Application Default { get; private set; }
 
+        [JsonProperty]
         protected internal ContextSettings settings { get; set; }
 
         /// <summary>
         /// Gets executed before <see cref="MainLoop()"/> happens (useful for initializing variables and things)
         /// </summary>
-        public Action Start { get; set; } = () => { };
+        private Action Start { get; set; } = () => { };
 
         /// <summary>
-        /// Gets executed every frame, this wont count as script or gameObject, it will be just code executed
+        /// Gets executed every frame, this wont count as script or GameObject, it will be just code executed
         /// </summary>
-        public Action Tick { get; set; } = () => { };
+        private Action Tick { get; set; } = () => { };
 
         #region Overloads
 
@@ -334,6 +339,25 @@ namespace Leaf
             Drawables.Add(drawable);
         }
 
+        public void UpdateIcon(byte[] icon)
+        {
+            Texture iconTex = new Texture(icon);
+            Window.SetIcon(iconTex.Size.X, iconTex.Size.Y, icon);
+        }
+
         #endregion
+
+        /// <summary>
+        /// Returns a JSON string that represents the current object
+        /// </summary>
+        /// <returns><see cref="string"/></returns>
+        public string ToJson()
+        {
+            return JsonConvert.SerializeObject(this, this.GetType(), Formatting.Indented, new JsonSerializerSettings()
+            {
+                Formatting = Formatting.Indented,
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+        }
     }
 }

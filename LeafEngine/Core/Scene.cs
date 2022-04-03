@@ -12,7 +12,8 @@ namespace Leaf
     /// </summary>
     public class Scene
     {
-        public GameObject[] objects;
+        [JsonProperty]
+        protected internal GameObject[] objects;
 
         public void Push(GameObject gameObject)
         {
@@ -25,6 +26,10 @@ namespace Leaf
             objects = gameObjects;
         }
 
+        /// <summary>
+        /// Returns a JSON string that represents the current object
+        /// </summary>
+        /// <returns><see cref="string"/></returns>
         public string ToJson()
         {
             return JsonConvert.SerializeObject(this, this.GetType(), Formatting.Indented, new JsonSerializerSettings()
@@ -40,9 +45,7 @@ namespace Leaf
 
             foreach (GameObject gameObject in objects)
             {
-                string objectIndicator = gameObject.transform.parent == null ? "- " : " - ";
-
-                hierarchy += objectIndicator + gameObject.ToString() + (gameObject.transform.parent == null ? "" : $" [Child of {gameObject.transform.parent.gameObject.name}]") + "\n";
+                hierarchy += "- " + gameObject.ToString() + "\n";
             }
 
             return hierarchy;

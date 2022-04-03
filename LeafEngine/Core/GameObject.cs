@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SFML.Graphics;
+using Newtonsoft.Json;
 
 namespace Leaf
 {
@@ -14,7 +15,9 @@ namespace Leaf
     {
         public Transform transform { get; set; } = new Transform();
 
+        [JsonProperty]
         protected internal Script[] components = Array.Empty<Script>();
+
         public string name { get; }
 
         public GameObject(Script[] scripts, string objectName)
@@ -98,8 +101,6 @@ namespace Leaf
         public float rotation { get; set; } = 0f;
 
         public Vector2 scale { get; set; }
-
-        public Transform parent { get; set; }
 
         public GameObject gameObject { get; set; }
 
