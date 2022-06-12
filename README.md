@@ -1,6 +1,9 @@
 # Leaf
 A C# based game engine
 
+## Warning
+The SFML Version of Leaf will no longer be developed, instead, see the [Raylib Version](https://github.com/sheerapi/LeafEngineRaylibCS)
+
 ## Introduction
 Leaf is a 2D game engine, made with C# and the [Simple and Fast Multimedia Library](https://www.sfml-dev.org).
 
